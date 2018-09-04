@@ -88,8 +88,29 @@ namespace StartFinance.Views
         }
 
 
-        private void DeleteItem_Click(object sender, RoutedEventArgs e)
+        private async void DeleteItem_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                string ItemSelection = ((ShoppingList)ShoppingListView.SelectedItem).ShopName;
+                if (ItemSelection == "")
+                {
+                    MessageDialog dialog = new MessageDialog("Not selected the Item", "Oops..!");
+                    await dialog.ShowAsync();
+                }
+                else
+                {
+                    conn.CreateTable<ShoppingList>();
+                    var query1 = conn.Table<ShoppingList>();
+                    var query3 = conn.Query<ShoppingList>("DELETE FROM ShoppingList WHERE ShopName ='" + ItemSelection + "'");
+                    ShoppingListView.ItemsSource = query1.ToList();
+                }
+            }
+            catch (NullReferenceException)
+            {
+                MessageDialog dialog = new MessageDialog("Not selected the Item", "Oops..!");
+                await dialog.ShowAsync();
+            }
         }
     }
 }
