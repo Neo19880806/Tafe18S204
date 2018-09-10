@@ -56,17 +56,25 @@ namespace StartFinance.Views
                 }
                 else
                 {
-                    conn.CreateTable<Appointment>();
-                    conn.Insert(new Appointment
+                    if(StartTime.Time >=EndTime.Time)
                     {
-                        EventName = EventName.Text.ToString(),
-                        Location = Location.Text.ToString(),
-                        EventDate = EventDate.Date.Date,
-                        StartTime = StartTime.Time.ToString(),
-                        EndTime = EndTime.Time.ToString()
-                    });
-                    // Creating table
-                    Results();
+                        MessageDialog dialog = new MessageDialog("Start Time should be less than End Time", "Oops..!");
+                        await dialog.ShowAsync();
+                    }
+                    else
+                    {
+                        conn.CreateTable<Appointment>();
+                        conn.Insert(new Appointment
+                        {
+                            EventName = EventName.Text.ToString(),
+                            Location = Location.Text.ToString(),
+                            EventDate = EventDate.Date.Date.ToString(),
+                            StartTime = StartTime.Time.ToString(),
+                            EndTime = EndTime.Time.ToString()
+                        });
+                        // Creating table
+                        Results();
+                    }
                 }
             }
             catch (Exception ex)
@@ -99,19 +107,27 @@ namespace StartFinance.Views
                 }
                 else
                 {
-                    int ID = ((Appointment)AppointmentListView.SelectedItem).AppointmentID;
-                    conn.CreateTable<Appointment>();
-                    conn.Update(new Appointment
+                    if (StartTime.Time >= EndTime.Time)
                     {
-                        AppointmentID = ID,
-                        EventName = EventName.Text.ToString(),
-                        Location = Location.Text.ToString(),
-                        EventDate = EventDate.Date.Date,
-                        StartTime = StartTime.Time.ToString(),
-                        EndTime = StartTime.Time.ToString()
-                    });
-                    // Creating table
-                    Results();
+                        MessageDialog dialog = new MessageDialog("Start Time should be less than End Time", "Oops..!");
+                        await dialog.ShowAsync();
+                    }
+                    else
+                    {
+                        int ID = ((Appointment)AppointmentListView.SelectedItem).AppointmentID;
+                        conn.CreateTable<Appointment>();
+                        conn.Update(new Appointment
+                        {
+                            AppointmentID = ID,
+                            EventName = EventName.Text.ToString(),
+                            Location = Location.Text.ToString(),
+                            EventDate = EventDate.Date.Date.ToString(),
+                            StartTime = StartTime.Time.ToString(),
+                            EndTime = EndTime.Time.ToString()
+                        });
+                        // Creating table
+                        Results();
+                    }
                 }
             }
         }
@@ -140,7 +156,7 @@ namespace StartFinance.Views
         private void AppointmentListView_Tapped(object sender, TappedRoutedEventArgs e)
         {
             selectedAppointment = (Appointment)AppointmentListView.SelectedValue;
-            DataContext = selectedAppointment;
+            DBStackPanel.DataContext = selectedAppointment;
         }
     }
 }
