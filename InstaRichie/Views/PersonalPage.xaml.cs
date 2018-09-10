@@ -64,16 +64,23 @@ namespace StartFinance.Views
                         DOB = DOB.Date.Date,
                         Gender = Gender.SelectionBoxItem.ToString(),
                         Email = Email.Text.ToString(),
-                        Phone = Phone.Text.ToString()
+                        Phone = int.Parse(Phone.Text.ToString()),
                     });
                     // Creating table
                     Results();
                 }
             }
-            catch
+            catch(Exception ex)
             {
-                MessageDialog dialog = new MessageDialog("Gender must be selected", "Oops..!");
-                await dialog.ShowAsync();
+                if(ex is FormatException)
+                {
+                    MessageDialog dialog = new MessageDialog("Phone number must be numeric digits", "Oops..!");
+                }
+                else
+                {
+                    MessageDialog dialog = new MessageDialog("Gender must be selected", "Oops..!");
+                    await dialog.ShowAsync();
+                }
                 /// no idea
             }
         }
@@ -104,7 +111,7 @@ namespace StartFinance.Views
                         DOB = DOB.Date.Date,
                         Gender = Gender.SelectionBoxItem.ToString(),
                         Email = Email.Text.ToString(),
-                        Phone = Phone.Text.ToString()
+                        Phone = int.Parse(Phone.Text.ToString())
                     });
                     // Creating table
                     Results();

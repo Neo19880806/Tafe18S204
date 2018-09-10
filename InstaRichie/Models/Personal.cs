@@ -46,7 +46,7 @@ namespace StartFinance.Models
         public string Gender { get; set; }
 
         [NotNull]
-        public string Phone { get; set; }
+        public int Phone { get; set; }
 
     }
 }
