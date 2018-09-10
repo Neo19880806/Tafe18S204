@@ -75,6 +75,7 @@ namespace StartFinance.Views
                 if(ex is FormatException)
                 {
                     MessageDialog dialog = new MessageDialog("Phone number must be numeric digits", "Oops..!");
+                    await dialog.ShowAsync();
                 }
                 else
                 {
@@ -121,28 +122,32 @@ namespace StartFinance.Views
 
         public async void DeletePerson_Click(object sender, RoutedEventArgs e)
         {
-            //try
-            //{
-            //    string AccSelection1 = ((Personal)PersonalView.SelectedItem).FirstName;
-            //    string AccSelection2 = ((Personal)PersonalView.SelectedItem).LastName;
-            //    if (AccSelection1 == "" || AccSelection2 == "")
-            //    {
-            //        MessageDialog dialog = new MessageDialog("Not selected the Person", "Oops..!");
-            //        await dialog.ShowAsync();
-            //    }
-            //    else
-            //    {
-            //        conn.CreateTable<Personal>();
-            //        var query1 = conn.Table<Personal>();
-            //        var query3 = conn.Query<Personal>("DELETE FROM WishList WHERE First Name ='" + AccSelection1 + "Last Name ='" + AccSelection2 + "'");
-            //        PersonalView.ItemsSource = query1.ToList();
-            //    }
-            //}
-            //catch (NullReferenceException)
-            //{
-            //    MessageDialog dialog = new MessageDialog("Not selected the Item", "Oops..!");
-            //    await dialog.ShowAsync();
-            //}
+            try
+            {
+                int AccSelection = ((Personal)PersonalView.SelectedItem).ID;
+                if (AccSelection == 0)
+                {
+                    MessageDialog dialog = new MessageDialog("Not selected the Item", "Oops..!");
+                    await dialog.ShowAsync();
+                }
+                else
+                {
+                    conn.CreateTable<Personal>();
+                    var query1 = conn.Table<Personal>();
+                    var query3 = conn.Query<Personal>("DELETE FROM Personal WHERE ID ='" + AccSelection + "'");
+                    PersonalView.ItemsSource = query1.ToList();
+                }
+
+                conn.CreateTable<Personal>();
+                var query = conn.Table<Personal>();
+                PersonalView.ItemsSource = query.ToList();
+
+            }
+            catch (NullReferenceException)
+            {
+                MessageDialog dialog = new MessageDialog("Not selected the Item", "Oops..!");
+                await dialog.ShowAsync();
+            }
         }
         public void Page_Loaded(object sender, RoutedEventArgs e)
         {
