@@ -97,6 +97,7 @@
             <!--primary commands-->
             <controls:PageHeader.PrimaryCommands>
                 <AppBarButton Icon="Add" Label="Add Personal Info" Click="AddPerson_Click"/>
+                <AppBarButton Icon="Edit" Label=" Edit Personal Info" Click="EditPerson_Click"/>
                 <AppBarButton Icon="Delete" Label="Delete Personal Info" Click="DeletePerson_Click"/>
             </controls:PageHeader.PrimaryCommands>
         </controls:PageHeader>
@@ -129,6 +130,7 @@
                     <ListView x:Name="PersonalView" Grid.Row="1"
                               HorizontalAlignment="Stretch"
                               VerticalAlignment="Stretch"
+                              Tapped="PersonalView_Tapped"
                               ItemTemplate="{StaticResource PersonalDataViews}">
                         <RelativePanel.Below>pageStart</RelativePanel.Below>
                     </ListView>

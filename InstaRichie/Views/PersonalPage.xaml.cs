@@ -25,6 +25,7 @@ namespace StartFinance.Views
     /// </summary>
     public sealed partial class PersonalPage : Page
     {
+        Personal selectedPersonal = null;
         SQLiteConnection conn; // adding an SQLite connection
         string path = Path.Combine(Windows.Storage.ApplicationData.Current.LocalFolder.Path, "Findata.sqlite");
         public PersonalPage()
@@ -76,6 +77,40 @@ namespace StartFinance.Views
                 /// no idea
             }
         }
+        public async void EditPerson_Click(object sender, RoutedEventArgs e)
+        {
+            if (PersonalView.SelectedItem == null)
+            {
+                MessageDialog dialog = new MessageDialog("No Item Selected", "Oops..!");
+                await dialog.ShowAsync();
+            }
+            else
+            {
+
+                if (FirstName.Text.ToString() == "" || LastName.Text.ToString() == "")
+                {
+                    MessageDialog dialog = new MessageDialog("Can't Leave First Name and Last Name Blank", "Oops..!");
+                    await dialog.ShowAsync();
+                }
+                else
+                {
+                    int personID = ((Personal)PersonalView.SelectedItem).ID;
+                    conn.CreateTable<Personal>();
+                    conn.Update(new Personal
+                    {
+                        ID = personID,
+                        FirstName = FirstName.Text.ToString(),
+                        LastName = LastName.Text.ToString(),
+                        DOB = DOB.Date.Date,
+                        Gender = Gender.SelectionBoxItem.ToString(),
+                        Email = Email.Text.ToString(),
+                        Phone = Phone.Text.ToString()
+                    });
+                    // Creating table
+                    Results();
+                }
+            }
+        }
 
         public async void DeletePerson_Click(object sender, RoutedEventArgs e)
         {
@@ -105,6 +140,11 @@ namespace StartFinance.Views
         public void Page_Loaded(object sender, RoutedEventArgs e)
         {
             Results();
+        }
+        private void PersonalView_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            selectedPersonal = (Personal)PersonalView.SelectedValue;
+            DataContext = selectedPersonal;
         }
     }
 }
