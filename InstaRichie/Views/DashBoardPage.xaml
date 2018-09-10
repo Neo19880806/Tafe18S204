@@ -119,7 +119,11 @@
                         </Grid.ColumnDefinitions>
 
                         <Grid x:Name="DashTop" Grid.Row="0" HorizontalAlignment="Left">
-                            <Pivot HorizontalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Pivot HorizontalAlignment="Center" Grid.ColumnSpan="2">
                                 <PivotItem Header="Money">
                                     <Grid>
                                         <StackPanel>
