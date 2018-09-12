@@ -110,9 +110,9 @@
                             HorizontalAlignment="Stretch">
                         <TextBox x:Name="EventName"  Header="EventName" Text="{Binding EventName}"/>
                         <TextBox x:Name="Location" Header="Location" Text="{Binding Location}"/>
-                        <DatePicker x:Name="EventDate" Header="EventDate" Date="{Binding EventDate,Converter={StaticResource StringToDateTime}}"/>
-                        <TimePicker x:Name="StartTime" Header="StartTime" Time="{Binding StartTime,Converter={StaticResource StringToTime}}"/>
-                        <TimePicker x:Name="EndTime" Header="EndTime" Time="{Binding EndTime,Converter={StaticResource StringToTime}}"/>
+                        <DatePicker x:Name="EventDate" Header="EventDate" Date="{Binding EventDate,Converter={StaticResource StringToDateTime},Mode=TwoWay}"/>
+                        <TimePicker x:Name="StartTime" Header="StartTime" Time="{Binding StartTime,Converter={StaticResource StringToTime},Mode=TwoWay}"/>
+                        <TimePicker x:Name="EndTime" Header="EndTime" Time="{Binding EndTime,Converter={StaticResource StringToTime},Mode=TwoWay}"/>
                     </StackPanel>
                     <ListView x:Name="AppointmentListView" Grid.Row="1"
                               HorizontalAlignment="Stretch"
