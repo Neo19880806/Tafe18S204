@@ -18,7 +18,17 @@ namespace StartFinance.Models
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            DateTime dt = (DateTime)value;
+            DateTime dt = DateTime.Now;
+
+            if(value is DateTimeOffset)
+            {
+                DateTimeOffset offset = (DateTimeOffset)value;
+                dt = offset.DateTime;
+            }
+            else
+            {
+                dt = (DateTime)value;
+            }
             String dtString = dt.ToString();
             return dtString;
         }
