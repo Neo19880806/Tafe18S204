@@ -25,6 +25,7 @@ namespace StartFinance.Views
     /// </summary>
     public sealed partial class ShoppingListPage : Page
     {
+        ShoppingList selectedShoppingList = null;
         SQLiteConnection conn; // adding an SQLite connection
         string path = Path.Combine(Windows.Storage.ApplicationData.Current.LocalFolder.Path, "Findata.sqlite");
         public ShoppingListPage()
@@ -61,7 +62,7 @@ namespace StartFinance.Views
                     {
                         ShopName = _ShopName.Text.ToString(),
                         NameOfItem = _NameOfItem.Text.ToString(),
-                        ShoppingDate = _ShoppingDate.Date.Date,
+                        ShoppingDate = _ShoppingDate.Date.Date.ToString(),
                         PriceQuoted = TempMoney
                     });
                     // Creating table
@@ -87,6 +88,38 @@ namespace StartFinance.Views
             }
         }
 
+        private async void UpdateItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (ShoppingListView.SelectedItem == null)
+            {
+                MessageDialog dialog = new MessageDialog("Not selected the Item", "Oops..!");
+                await dialog.ShowAsync();
+            }
+            else
+            {
+                if (_ShopName.Text.ToString() == "" || _NameOfItem.Text.ToString() == "")
+                {
+                    MessageDialog dialog = new MessageDialog("No value entered", "Oops..!");
+                    await dialog.ShowAsync();
+                }
+                else
+                {
+                    int ID = ((ShoppingList)ShoppingListView.SelectedItem).ID;
+                    decimal TempMoney = Convert.ToDecimal(_PriceQuoted.Text);
+                    conn.CreateTable<ShoppingList>();
+                    conn.Update(new ShoppingList
+                    {
+                        ID = ID,
+                        ShopName = _ShopName.Text.ToString(),
+                        NameOfItem = _NameOfItem.Text.ToString(),
+                        ShoppingDate = _ShoppingDate.Date.Date.ToString(),
+                        PriceQuoted = TempMoney
+                    });
+                    // Creating table
+                    Results();
+                }
+            }
+        }
 
         private async void DeleteItem_Click(object sender, RoutedEventArgs e)
         {
@@ -111,6 +144,12 @@ namespace StartFinance.Views
                 MessageDialog dialog = new MessageDialog("Not selected the Item", "Oops..!");
                 await dialog.ShowAsync();
             }
+        }
+
+        private void ShoppingListView_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            selectedShoppingList = (ShoppingList)ShoppingListView.SelectedValue;
+            DBStackPanel.DataContext = selectedShoppingList;
         }
     }
 }

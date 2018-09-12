@@ -6,6 +6,7 @@
     xmlns:controls="using:Template10.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Converters="using:StartFinance.Models"
     xmlns:vm="using:StartFinance.ViewModels" mc:Ignorable="d">
 
     <Page.DataContext>
@@ -13,6 +14,7 @@
     </Page.DataContext>
 
     <Page.Resources>
+        <Converters:StringToDateTime x:Key="StringToDateTime"/>
         <DataTemplate x:Key="ShoppingItemDataViews">
             <Grid>
                 <StackPanel Orientation="Horizontal">
@@ -81,6 +83,7 @@
             <!--primary commands-->
             <controls:PageHeader.PrimaryCommands>
                 <AppBarButton Icon="Add" Label="Add ShoppingList" Click="AddShoppingItem_Click"/>
+                <AppBarButton Icon="Edit" Label="Edit ShoppingList" Click="UpdateItem_Click"/>
                 <AppBarButton Icon="Delete" Label="Delete ShoppingList" Click="DeleteItem_Click"/>
             </controls:PageHeader.PrimaryCommands>
         </controls:PageHeader>
@@ -95,18 +98,18 @@
                         <RowDefinition Height="250"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <StackPanel Grid.Row="0"
+                    <StackPanel x:Name="DBStackPanel" Grid.Row="0" 
                             Orientation="Vertical" VerticalAlignment="Stretch"
                             HorizontalAlignment="Stretch">
-                        <TextBox x:Name="_ShopName" PlaceholderText="" Header="Shop Name"/>
-                        <TextBox x:Name="_NameOfItem" PlaceholderText="" Header="Name Of Item"/>
-                        <DatePicker x:Name="_ShoppingDate" Header="Shopping Date"/>
-                        <TextBox x:Name="_PriceQuoted" Header="Amount" PlaceholderText="1000.00" TextWrapping="Wrap" InputScope="Number"/>
+                        <TextBox x:Name="_ShopName"  Header="Shop Name" Text="{Binding ShopName}"/>
+                        <TextBox x:Name="_NameOfItem"  Header="Name Of Item" Text="{Binding NameOfItem}"/>
+                        <DatePicker x:Name="_ShoppingDate" Header="Shopping Date" Date="{Binding ShoppingDate,Converter={StaticResource StringToDateTime},Mode=TwoWay}"/>
+                        <TextBox x:Name="_PriceQuoted" Header="Amount" TextWrapping="Wrap" InputScope="Number" Text="{Binding PriceQuoted}"/>
                     </StackPanel>
                     <ListView x:Name="ShoppingListView" Grid.Row="1"
                               HorizontalAlignment="Stretch"
                               VerticalAlignment="Stretch"
-                              ItemTemplate="{StaticResource ShoppingItemDataViews}">
+                              ItemTemplate="{StaticResource ShoppingItemDataViews}" Tapped="ShoppingListView_Tapped">
                         <RelativePanel.Below>pageStart</RelativePanel.Below>
                     </ListView>
                 </Grid>

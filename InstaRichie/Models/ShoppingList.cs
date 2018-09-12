@@ -19,7 +19,7 @@ namespace StartFinance.Models
         public string NameOfItem { get; set; }
 
         [NotNull]
-        public DateTime ShoppingDate { get; set; }
+        public string ShoppingDate { get; set; }
 
         [NotNull]
         public Decimal PriceQuoted { get; set; }
