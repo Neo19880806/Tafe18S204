@@ -25,6 +25,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:StartFinance.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Converters="using:StartFinance.Models"
     Loaded="Page_Loaded" 
     xmlns:vm="using:StartFinance.ViewModels"  mc:Ignorable="d">
 
@@ -33,6 +34,7 @@
     </Page.DataContext>
 
     <Page.Resources>
+        <Converters:StringToDateTime x:Key="StringToDateTime"/>
         <DataTemplate x:Key="PersonalDataViews">
             <Grid>
                 <StackPanel Orientation="Horizontal">
@@ -117,8 +119,8 @@
                             HorizontalAlignment="Stretch">
                         <TextBox x:Name="FirstName" PlaceholderText="Enter First Name Here" Header="First Name" Text="{Binding FirstName}"/>
                         <TextBox x:Name="LastName" PlaceholderText="Enter Last Name Here" Header="Last Name" Text="{Binding LastName}"/>
-                        <DatePicker x:Name="DOB" Header="Date of Birth" Date="{Binding DOB.Date}"/>
-                        <ComboBox x:Name="Gender" Header="Gender" SelectedItem="{Binding Gender.SelectionBoxItem}">
+                        <DatePicker x:Name="DOB" Header="Date of Birth" Date="{Binding DOB,Converter={StaticResource StringToDateTime},Mode=TwoWay}"/>
+                        <ComboBox x:Name="Gender" Header="Gender" SelectedValuePath="Content" SelectedValue="{Binding Gender, Mode=TwoWay}">
                             <ComboBoxItem Content="M" />
                             <ComboBoxItem Content="F"/>
                             <ComboBoxItem Content="Not to Tell"/>
