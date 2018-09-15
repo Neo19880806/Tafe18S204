@@ -94,6 +94,7 @@
                          RelativePanel.AlignBottomWithPanel="True">
             <!--primary commands-->
             <controls:PageHeader.PrimaryCommands>
+                <AppBarButton Icon="Edit" Label="Edit ContactDetails" Click="Edit_ContactDetail_Click"/>
                 <AppBarButton Icon="Add" Label="Add ContactDetails" Click="AddContactDetail_Click"/>
                 <AppBarButton Icon="Delete" Label="Delete ContactDetails" Click="DeleteItem_Click"/>
             </controls:PageHeader.PrimaryCommands>
