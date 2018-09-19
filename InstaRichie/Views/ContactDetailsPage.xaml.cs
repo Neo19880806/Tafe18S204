@@ -124,7 +124,7 @@ namespace StartFinance.Views
                 string AccSelection = ((ContactDetails)ContactDetailsView.SelectedItem).contactID.ToString(); // selected ID
                 if (AccSelection == "")
                 {
-                    MessageDialog dialog = new MessageDialog("Not selected the Item", "Oops..!");
+                    MessageDialog dialog = new MessageDialog("Not selected the Item", "Oops..!"); //if nothing selected show message
                     await dialog.ShowAsync();
                 }
                 else
@@ -137,7 +137,7 @@ namespace StartFinance.Views
             }
             catch (NullReferenceException)
             {
-                MessageDialog dialog = new MessageDialog("Not selected the Item", "Oops..!");
+                MessageDialog dialog = new MessageDialog("Not selected the Item", "Oops..!"); 
                 await dialog.ShowAsync();
             }
         }
@@ -147,6 +147,69 @@ namespace StartFinance.Views
             Results();
         }
 
+        private async void Edit_ContactDetail_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string AccSelection = ((ContactDetails)ContactDetailsView.SelectedItem).contactID.ToString(); //selected Contact by ID
+                if (AccSelection == "")
+                {
+                    MessageDialog dialog = new MessageDialog("Not selected the Item", "Oops..!"); //if nothing selected show message
+                    await dialog.ShowAsync();
+                }
+                else
+                {
+                    if (_firstName.Text.ToString() == "")
+                    {
+                        MessageDialog dialog = new MessageDialog("Please Enter your first name");
+                        await dialog.ShowAsync();
+                    }
+                    else if (_lastName.Text.ToString() == "")
+                    {
+                        MessageDialog dialog = new MessageDialog("Please Enter your last name");
+                        await dialog.ShowAsync();
+                    }
+                    else if (_companyName.Text.ToString() == "")
+                    {
+                        MessageDialog dialog = new MessageDialog("Please Enter your company name");
+                        await dialog.ShowAsync();
+                    }
+                    else if (_email.Text.ToString() == "")
+                    {
+                        MessageDialog dialog = new MessageDialog("Please Enter your email address");
+                        await dialog.ShowAsync();
+                    }
+                    else if (_mobilePhone.Text.ToString() == "")
+                    {
+                        MessageDialog dialog = new MessageDialog("Please Enter your mobile phone Number");
+                        await dialog.ShowAsync();
+                    }
+                    else
+                    {
+
+                        int oldContactID = ((ContactDetails)ContactDetailsView.SelectedItem).contactID; // Updates the contactDetails on the selected contact in the view
+                        conn.CreateTable<ContactDetails>();
+                        conn.Update(new ContactDetails
+                        {
+                            contactID = oldContactID, 
+                            firstName = _firstName.Text.ToString(),
+                            lastName = _lastName.Text.ToString(),
+                            companyName = _companyName.Text.ToString(),
+                            mobilePhone = _mobilePhone.Text.ToString(),
+                            email = _email.Text.ToString()
+                        });
+                        Results();
+                    }
+                }
+            }
+            catch (NullReferenceException)
+            {
+                MessageDialog dialog = new MessageDialog("Not selected the Item", "Oops..!");
+                await dialog.ShowAsync();
+            }
+
+
+        }
     }
 }
 
