@@ -25,6 +25,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:StartFinance.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Converters="using:StartFinance.Models"
     Loaded="Page_Loaded" 
     xmlns:vm="using:StartFinance.ViewModels"  mc:Ignorable="d">
 
@@ -33,6 +34,7 @@
     </Page.DataContext>
 
     <Page.Resources>
+        <Converters:StringToDateTime x:Key="StringToDateTime"/>
         <DataTemplate x:Key="PersonalDataViews">
             <Grid>
                 <StackPanel Orientation="Horizontal">
@@ -80,7 +82,7 @@
 
         <controls:PageHeader x:Name="pageHeader" RelativePanel.AlignLeftWithPanel="True"
                              RelativePanel.AlignRightWithPanel="True"
-                             RelativePanel.AlignTopWithPanel="True" Text="Wish List">
+                             RelativePanel.AlignTopWithPanel="True" Text="Personal Info">
 
             <!--  secondary commands  -->
             <controls:PageHeader.SecondaryCommands>
@@ -115,16 +117,16 @@
                     <StackPanel x:Name="pageStart" Grid.Row="0"
                             Orientation="Vertical" VerticalAlignment="Stretch"
                             HorizontalAlignment="Stretch">
-                        <TextBox x:Name="FirstName" PlaceholderText="Enter First Name Here" Header="First Name"/>
-                        <TextBox x:Name="LastName" PlaceholderText="Enter Last Name Here" Header="Last Name"/>
-                        <DatePicker x:Name="DOB" Header="Date of Birth"/>
-                        <ComboBox x:Name="Gender" Header="Gender">
+                        <TextBox x:Name="FirstName" PlaceholderText="Enter First Name Here" Header="First Name" Text="{Binding FirstName}"/>
+                        <TextBox x:Name="LastName" PlaceholderText="Enter Last Name Here" Header="Last Name" Text="{Binding LastName}"/>
+                        <DatePicker x:Name="DOB" Header="Date of Birth" Date="{Binding DOB,Converter={StaticResource StringToDateTime},Mode=TwoWay}"/>
+                        <ComboBox x:Name="Gender" Header="Gender" SelectedValuePath="Content" SelectedValue="{Binding Gender, Mode=TwoWay}">
                             <ComboBoxItem Content="M" />
                             <ComboBoxItem Content="F"/>
                             <ComboBoxItem Content="Not to Tell"/>
                         </ComboBox>
-                        <TextBox x:Name="Email" PlaceholderText="Enter Your Email Address" Header="Email"/>
-                        <TextBox x:Name="Phone" PlaceholderText="Enter Your Phone Number" Header="Phone"/>
+                        <TextBox x:Name="Email" PlaceholderText="Enter Your Email Address" Header="Email" Text="{Binding Email}"/>
+                        <TextBox x:Name="Phone" PlaceholderText="Enter Your Phone Number" Header="Phone" Text="{Binding Phone}"/>
                         <!--<TextBox x:Name="MoneyIn" Header="Amount" PlaceholderText="1000.00" TextWrapping="Wrap" InputScope="Number"/>-->
                     </StackPanel>
                     <ListView x:Name="PersonalView" Grid.Row="1"

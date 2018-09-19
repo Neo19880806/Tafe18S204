@@ -61,7 +61,7 @@ namespace StartFinance.Views
                     {
                         FirstName = FirstName.Text.ToString(),
                         LastName = LastName.Text.ToString(),
-                        DOB = DOB.Date.Date,
+                        DOB = DOB.Date.Date.ToString(),
                         Gender = Gender.SelectionBoxItem.ToString(),
                         Email = Email.Text.ToString(),
                         Phone = int.Parse(Phone.Text.ToString()),
@@ -109,7 +109,7 @@ namespace StartFinance.Views
                         ID = personID,
                         FirstName = FirstName.Text.ToString(),
                         LastName = LastName.Text.ToString(),
-                        DOB = DOB.Date.Date,
+                        DOB = DOB.Date.Date.ToString(),
                         Gender = Gender.SelectionBoxItem.ToString(),
                         Email = Email.Text.ToString(),
                         Phone = int.Parse(Phone.Text.ToString())

@@ -37,7 +37,7 @@ namespace StartFinance.Models
         public string LastName { get; set; }
 
         [NotNull]
-        public DateTime DOB { get; set; }
+        public string DOB { get; set; }
 
         [NotNull]
         public string Email { get; set; }
